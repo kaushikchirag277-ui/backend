@@ -1,0 +1,99 @@
+package com.example.Hello_world_api.repository;
+
+// public class UserLoginRepository {
+    
+// }
+//package com.example.Hello_world_api.repository;
+
+import com.example.Hello_world_api.model.UserLogin;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
+import org.bson.Document;
+import org.bson.types.ObjectId;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class UserLoginRepository {
+
+    private MongoCollection<Document> collection;
+
+    public UserLoginRepository() {
+        MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017"); // Update if needed
+        MongoDatabase database = mongoClient.getDatabase("Kx");     // Use your DB name
+        this.collection = database.getCollection("User_login");
+    }
+
+    public UserLogin findByMobile(String mobile) {
+    Document doc = collection.find(new Document("mobile", mobile)).first();
+
+    if (doc != null) {
+        UserLogin user = new UserLogin();
+
+        // Handle _id as either ObjectId or String
+        Object idField = doc.get("_id");
+        if (idField instanceof ObjectId) {
+            user.setId(((ObjectId) idField).toHexString());
+        } else if (idField instanceof String) {
+            user.setId((String) idField);
+        } else {
+            user.setId(null); // fallback
+        }
+
+        user.setName(doc.getString("name"));
+        user.setMobile(doc.getString("mobile"));
+        user.setRole(doc.getString("role"));
+
+        // Convert shops array safely
+        List<?> rawList = doc.getList("shops", Object.class);
+        List<String> shops = new ArrayList<>();
+
+        if (rawList != null) {
+            for (Object obj : rawList) {
+                if (obj instanceof String) {
+                    shops.add((String) obj);
+                }
+            }
+        }
+
+        user.setShops(shops);
+        return user;
+    }
+
+    return null;
+}
+
+    // public UserLogin findByMobile(String mobile) {
+    //     Document doc = collection.find(new Document("mobile", mobile)).first();
+
+    //     if (doc != null) {
+    //         UserLogin user = new UserLogin();
+    //         user.setId(doc.getObjectId("_id").toHexString());
+    //         user.setName(doc.getString("name"));
+    //         user.setMobile(doc.getString("mobile"));
+    //         user.setRole(doc.getString("role"));
+    //         List<?> rawList = doc.getList("shops", Object.class);
+    //         List<String> shops = new ArrayList<>();
+
+    //         if (rawList != null) {
+    //             for (Object obj : rawList) {
+    //                 if (obj instanceof String) {
+    //                     shops.add((String) obj);
+    //                 }
+    //             }
+    //         }
+
+    //         user.setShops(shops);
+
+    //         // List<String> shops = (List<String>) doc.get("shops", List.class);
+    //         // user.setShops(shops);
+
+    //         return user;
+    //     }
+
+    //     return null;
+    // }
+}
