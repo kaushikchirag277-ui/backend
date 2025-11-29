@@ -14,7 +14,7 @@ public class RoleRepository {
     private MongoCollection<Document> collection;
 
     public RoleRepository() {
-        MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
+        MongoClient mongoClient = MongoClients.create("mongodb+srv://user:1234@cluster0.tltzqod.mongodb.net");
         MongoDatabase database = mongoClient.getDatabase("Kx");
         this.collection = database.getCollection("roles");
     }

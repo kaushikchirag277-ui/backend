@@ -14,9 +14,10 @@ public class StoreRepository {
     private MongoCollection<Document> collection;
 
     public StoreRepository() {
-        MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
+        MongoClient mongoClient = MongoClients.create("mongodb+srv://user:1234@cluster0.tltzqod.mongodb.net");
         MongoDatabase database = mongoClient.getDatabase("Kx");
         this.collection = database.getCollection("stores");
+        System.out.println("Collection: " + collection.getNamespace());
     }
 
     public List<Store> findStoreNamesByIds(List<String> storeIds) {

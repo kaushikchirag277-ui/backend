@@ -22,7 +22,7 @@ public class UserLoginRepository {
     private MongoCollection<Document> collection;
 
     public UserLoginRepository() {
-        MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017"); // Update if needed
+        MongoClient mongoClient = MongoClients.create("mongodb+srv://user:1234@cluster0.tltzqod.mongodb.net"); // Update if needed
         MongoDatabase database = mongoClient.getDatabase("Kx");     // Use your DB name
         this.collection = database.getCollection("User_login");
     }
