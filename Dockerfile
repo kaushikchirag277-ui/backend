@@ -16,7 +16,7 @@ FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /hello-world-api
 
 # Copy the built JAR from Maven
-COPY --from=build /app/target/hello-world-api-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/*.jar app.jar
 # Environment variables (Render will override these)
 ENV MONGO_URI="mongodb+srv://user:1234@cluster0.tltzqod.mongodb.net/"
 ENV DB_NAME="Kx"
