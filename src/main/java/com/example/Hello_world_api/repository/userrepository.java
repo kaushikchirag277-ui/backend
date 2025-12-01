@@ -1,7 +1,7 @@
 
 package com.example.Hello_world_api.repository;
 
-import com.example.Hello_world_api.model.user;
+import com.example.Hello_world_api.model.*;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -18,12 +18,12 @@ public class userrepository {
     private final MongoDatabase database;
 
     public userrepository() {
-        this.database = MongoClients.create("mongodb://localhost:27017")
+        this.database = MongoClients.create("mongodb+srv://user:1234@cluster0.tltzqod.mongodb.net")
                                      .getDatabase("Kx");
     }
 
     private MongoCollection<Document> getCollection() {
-        return database.getCollection("users");
+        return database.getCollection("stores");
     }
 
     // ✅ Create new user only (inserts document)
@@ -68,6 +68,24 @@ public class userrepository {
         }
         return users;
     }
+
+   public List<Store> getAllStores() {
+    MongoCollection<Document> collection = getCollection();
+    List<Store> stores = new ArrayList<>();
+
+    for (Document doc : collection.find()) {
+        Store store = new Store();
+        store.setId(doc.getString("_id"));
+        store.setName(doc.getString("name"));
+        store.setLocation(doc.getString("location"));
+
+        stores.add(store);   // IMPORTANT: Add each store to the list
+    }
+
+    return stores;  // Return the final list
+}
+
+    
 
     // ✅ Get user by ID
     public user getUserById(String id) {
