@@ -1,3 +1,14 @@
+
+# Stage 1 — Build using Maven
+FROM maven:3.9.6-eclipse-temurin-17 AS build
+
+WORKDIR /app
+
+COPY pom.xml .
+COPY src ./src
+
+# This will run Maven inside the container (mvnd NOT required)
+RUN mvn -e -X clean package -DskipTests
 # Use Java 17
 FROM eclipse-temurin:17-jdk-alpine
 
