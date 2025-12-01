@@ -77,7 +77,7 @@ public class userrepository {
         Store store = new Store();
         store.setId(doc.getString("_id"));
         store.setName(doc.getString("name"));
-        store.setLocation(doc.getString("location"));
+       // store.setLocation(doc.getString("location"));
 
         stores.add(store);   // IMPORTANT: Add each store to the list
     }
