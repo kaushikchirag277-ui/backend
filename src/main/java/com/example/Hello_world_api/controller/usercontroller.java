@@ -2,6 +2,9 @@ package com.example.Hello_world_api.controller;
 
 import com.example.Hello_world_api.model.user;
 import com.example.Hello_world_api.repository.userrepository;
+import com.example.Hello_world_api.util.MongoUtil;
+import com.mongodb.client.MongoDatabase;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +58,16 @@ public class usercontroller {
                                  .body("User not found with ID: " + id);
         }
     }
+
+    @GetMapping("/test")
+public String testConnection() {
+    try {
+        MongoDatabase db = MongoUtil.getDatabase();
+        return "Connected to: " + db.getName();
+    } catch (Exception e) {
+        return "Error: " + e.getMessage();
+    }
+}
 
     // ✅ Update full user document by ID (fixed)
     // @PutMapping("/{id}")

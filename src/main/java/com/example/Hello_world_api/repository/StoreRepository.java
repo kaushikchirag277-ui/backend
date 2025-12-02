@@ -8,7 +8,9 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class StoreRepository {
 
     private MongoCollection<Document> collection;

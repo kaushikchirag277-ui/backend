@@ -17,7 +17,8 @@ public class MongoUtil {
     private static final String CONNECTION_STRING = "mongodb+srv://user:1234@cluster0.tltzqod.mongodb.net/";
     private static final String DB_NAME = "Kx";
 
-    private static final MongoClient mongoClient = MongoClients.create(CONNECTION_STRING);
+    private static  MongoClient mongoClient = MongoClients.create(CONNECTION_STRING);
+
 
     public static MongoCollection<Document> getUserCollection() {
         MongoDatabase database = mongoClient.getDatabase(DB_NAME);
@@ -26,5 +27,12 @@ public class MongoUtil {
      public static MongoCollection<Document> getUserLoginCollection() {
         MongoDatabase database = mongoClient.getDatabase(DB_NAME);
         return database.getCollection("User_login"); // Make sure name matches MongoDB exactly
+    }
+    
+    public static MongoDatabase getDatabase() {
+        if (mongoClient == null) {
+            mongoClient = MongoClients.create(CONNECTION_STRING);
+        }
+        return mongoClient.getDatabase(DB_NAME);
     }
 }
